@@ -34,6 +34,10 @@
     const result = await response.json();
     console.log('API Response:', result);
     prediction = result.prediction;
+    sepal_length = '';
+    sepal_width = '';
+    pedal_length = '';
+    pedal_width = '';
 
   } catch (error) {
     if (error instanceof Error) {
@@ -43,24 +47,35 @@
       }
       console.error('Error:', errorMessage); // Debugging: Log errors
     }
+    // let sepal_length = '';
+    // let sepal_width = '';
+    // let pedal_length = '';
+    // let pedal_width = '';
 }
 </script>
 
-<div class="h-screen flex flex-col items-center justify-center bg-gray-400">
+<div class="h-screen flex flex-col items-center justify-center bg-custom-teal bg-gradient-to-b from-custom-brown to-custom-dark-brown">
 
   {#if prediction}
-    <div class="text-4xl font-bold text-white mt-20 mb-10">
+    <div class="text-6xl font-bold text-iris mt-10 mb-10">
       <h2>Prediction: {prediction}</h2>
+      {#if prediction == 'Setosa'}
+        <img src="/setosa_iris.jpg" class="w-52 h-48 mx-auto mt-4" alt="setosa iris">
+      {:else if prediction == 'Virginica'}
+        <img src="/virginica_iris.jpg" class="w-52 h-48 mx-auto mt-4" alt="setosa iris">
+      {:else}
+        <img src="/versicolor_iris.jpeg" class="w-52 h-48 mx-auto mt-4" alt="setosa iris">
+      {/if}
     </div>
   {/if}
 
   <form on:submit={handleSubmit} class="flex flex-col justify-center items-center">
-    <h1 class="text-xl font-bold text-gray-800 mb-10">Measurement Classification</h1>
-    <input class="m-1" type="text" bind:value={sepal_length} placeholder=sepal_length/>
-    <input class="m-1" type="text" bind:value={sepal_width} placeholder=sepal_width/>
-    <input class="m-1" type="text" bind:value={pedal_length} placeholder="pedal_length"/>
-    <input class="m-1" type="text" bind:value={pedal_width} placeholder="pedal_width"/>
-    <button class="font-bold mt-10">Enter</button>
+    <h1 class="text-2xl font-bold text-iris mb-10">Measurement Classification</h1>
+    <input class="m-1" type="number" step="0.01" bind:value={sepal_length} placeholder=sepal_length/>
+    <input class="m-1" type="number" step="0.01" bind:value={sepal_width} placeholder=sepal_width/>
+    <input class="m-1" type="number" step="0.01" bind:value={pedal_length} placeholder="pedal_length"/>
+    <input class="m-1" type="number" step="0.01" bind:value={pedal_width} placeholder="pedal_width"/>
+    <button class="font-bold mt-10 text-iris">Enter</button>
   </form>
 </div>
 
